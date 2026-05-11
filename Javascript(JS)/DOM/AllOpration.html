@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>DOM Full Example</title>
+
+  <style>
+
+    .box {
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid black;
+    }
+
+  </style>
+</head>
+
+<body>
+
+  <h1 id="title">Welcome</h1>
+
+  <input type="text" id="taskInput" placeholder="Enter task">
+
+  <button id="addBtn">Add Task</button>
+
+  <ul id="taskList">
+
+    <li class="box">
+      Learn JavaScript
+      <button class="deleteBtn">Delete</button>
+    </li>
+
+  </ul>
+
+
+
+</body>
+</html>
+
+<script>
+// ===============================
+// 1. GET ELEMENTS
+// ===============================
+
+const title = document.getElementById("title");
+
+const taskInput = document.getElementById("taskInput");
+
+const addButton = document.getElementById("addBtn");
+
+const taskList = document.getElementById("taskList");
+
+
+// ===============================
+// 2. READ DATA
+// ===============================
+
+console.log(title.innerText);
+
+console.log(taskInput.value);
+
+
+// ===============================
+// 3. UPDATE DATA
+// ===============================
+
+title.innerText = "DOM Practice App";
+
+title.style.color = "blue";
+
+
+// ===============================
+// 4. CREATE NEW ELEMENT
+// ===============================
+
+addButton.addEventListener("click", function () {
+
+  // Read input value
+  const taskText = taskInput.value;
+
+  // Validation
+  if (taskText.trim() === "") {
+    alert("Please enter a task");
+    return;
+  }
+
+  // Create new li
+  const li = document.createElement("li");
+
+  li.classList.add("box");
+
+  li.innerText = taskText;
+
+
+  // Create delete button
+  const deleteButton = document.createElement("button");
+
+  deleteButton.innerText = "Delete";
+
+  deleteButton.classList.add("deleteBtn");
+
+
+  // Add button inside li
+  li.appendChild(deleteButton);
+
+
+  // Add li inside ul
+  taskList.appendChild(li);
+
+
+  // Clear input
+  taskInput.value = "";
+});
+
+
+// ===============================
+// 5. DELETE ELEMENT
+// ===============================
+
+taskList.addEventListener("click", function (event) {
+
+  // Check clicked element
+  if (event.target.classList.contains("deleteBtn")) {
+
+    // Remove parent li
+    event.target.parentElement.remove();
+  }
+});
+</script>

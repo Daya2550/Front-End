@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1 class="title">Hello</h1>
+    <p class="description">This is a paragraph.</p>
+    <h2 id="data">Data Heading</h2> 
+    <h3>Subheading</h3>
+    <ul>
+        <li>Item 1</li>
+        <li>Item 2</li>
+    </ul>
+
+</body>
+</html>
+
+<script>
+    // Accessing elements using querySelector
+    const title = document.querySelector('.title'); // Selects the first element with class 'title'
+    const description = document.querySelector('.description');
+    const dataHeading = document.querySelector('#data'); // Selects the element with id 'data'
+    const subheading = document.querySelector('h3'); // Selects the first <h3> element
+    const listItem1 = document.querySelector('li'); // Selects the first <li> element
+    const listItem2 = document.querySelector('li:nth-child(2) '); // Selects the second <li> element
+        
+    title.textContent = 'Hello, World!';
+    title.style.color = 'blue';
+
+    description.textContent = 'This is an updated paragraph.';
+    description.style.color = 'orange';
+
+    dataHeading.textContent = 'Updated Data Heading';
+    dataHeading.style.color = 'purple';
+
+    subheading.textContent = 'Updated Subheading';
+    subheading.style.color = 'brown';
+
+    listItem1.textContent = 'Updated Item 1';
+    listItem1.style.color = 'green';
+    listItem2.textContent = 'Updated Item 2';
+    listItem2.style.color = 'green';
+</script>

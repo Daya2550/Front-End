@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <p class="text">One</p>
+    <p class="text">Two</p>
+</body>
+</html>
+
+<script>
+    // Accessing elements by their class name
+    const paragraphs = document.getElementsByClassName('text');
+    console.log(paragraphs); // HTMLCollection of elements with class 'text'
+    for (let i = 0; i < paragraphs.length; i++) {
+        paragraphs[i].textContent = `Paragraph ${i + 1}`;
+        paragraphs[i].style.color = 'green';
+    }
+</script>

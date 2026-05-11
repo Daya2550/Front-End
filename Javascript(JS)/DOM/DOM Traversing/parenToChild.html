@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id ="parent">
+        <p>Child 1</p>
+        <p>Child 2</p>
+    </div>  
+
+</body>
+</html>
+<script>
+    // Accessing the parent element
+    const parentElement = document.getElementById('parent');
+    // Accessing the child elements of the parent element
+    const childElements = parentElement.children;
+    console.log(childElements); // HTMLCollection of child elements
+    for (let i = 0; i < childElements.length; i++) {
+        childElements[i].textContent = `Child ${i + 1}`;
+        childElements[i].style.color = 'purple';
+    }
+
+    
+</script>

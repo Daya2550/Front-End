@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id ="parent">
+        <p id="child1">Child 1</p>
+        <p id="child2">Child 2</p>
+    </div>  
+
+</body>
+</html>
+<script>
+    // Accessing a child element
+    const childElement1 = document.getElementById('child1');
+    console.log(childElement1); // <p id="child1">Child 1</p>
+    // Accessing the parent element of the child element
+    const parentOfChild1 = childElement1.parentElement;
+    console.log(parentOfChild1); // <div id="parent">...</div>
+    parentOfChild1.style.border = '2px solid red'; // Adding a border to the parent element to visually confirm the relationship
+
+    const childElement2 = childElement1.nextElementSibling; // Accessing the next sibling of childElement1
+    console.log(childElement2); // <p id="child2">Child 2</p>
+    childElement2.style.color = 'green'; // Changing the color of the second child element
+    childElement1.style.color = 'blue'; // Changing the color of the first child element
+
+
+</script>

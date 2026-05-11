@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h2>Title 1</h2>
+    <h2>Title 2</h2>
+</body>
+</html>
+
+<script>
+    // Accessing elements by their tag name
+    const headings = document.getElementsByTagName('h2');
+    console.log(headings); // HTMLCollection of all <h2> elements
+    for (let i = 0; i < headings.length; i++) {
+        headings[i].textContent = `Heading ${i + 1}`;
+        headings[i].style.color = 'red';
+    }
+</script>

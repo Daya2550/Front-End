@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitHub API Card </title>
+</head>
+ <style>
+
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body{
+            background: linear-gradient(to right, #141e30, #243b55);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container{
+            width: 100%;
+            max-width: 420px;
+        }
+
+        .search-box{
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .search-box input{
+            flex: 1;
+            padding: 14px;
+            border: none;
+            outline: none;
+            border-radius: 10px;
+            font-size: 16px;
+        }
+
+        .search-box button{
+            padding: 14px 18px;
+            border: none;
+            border-radius: 10px;
+            background-color: #00b894;
+            color: white;
+            font-size: 15px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .search-box button:hover{
+            background-color: #019875;
+        }
+
+        #error{
+            color: #ff7675;
+            text-align: center;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+
+        .card{
+            background-color: white;
+            border-radius: 20px;
+            padding: 25px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn{
+            from{
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to{
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .card img{
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 4px solid #00b894;
+            margin-bottom: 15px;
+        }
+
+        .card h2{
+            margin-bottom: 10px;
+            color: #222;
+        }
+
+        .bio{
+            color: #666;
+            margin-bottom: 20px;
+            font-size: 15px;
+        }
+
+        .info{
+            text-align: left;
+        }
+
+        .info p{
+            margin: 10px 0;
+            padding: 10px;
+            background-color: #f5f6fa;
+            border-radius: 8px;
+            font-size: 15px;
+        }
+
+        .info strong{
+            color: #2d3436;
+        }
+
+        .info a{
+            color: #0984e3;
+            text-decoration: none;
+        }
+
+        .stats{
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+            gap: 10px;
+        }
+
+        .stat-box{
+            flex: 1;
+            background-color: #00b894;
+            color: white;
+            padding: 15px;
+            border-radius: 12px;
+        }
+
+        .stat-box h3{
+            margin-bottom: 5px;
+        }
+
+    </style>
+<body>
+
+
+
+ <div class="container">
+
+        <div class="search-box">
+            <input type="text" id="username" placeholder="Enter GitHub username">
+            <button id="fetchBtn">Search</button>
+        </div>
+
+        <h3 id="error"></h3>
+
+        <div class="card" id="userInfo">
+
+            <img id="avatar" src="" alt="User Avatar">
+
+            <h2 id="name"></h2>
+
+            <p class="bio" id="bio"></p>
+
+            <div class="info">
+                <p>
+                    <strong>Blog:</strong>
+                    <a id="blog" href="" target="_blank"></a>
+                </p>
+
+                <p>
+                    <strong>Email:</strong>
+                    <span id="email"></span>
+                </p>
+
+                <p>
+                    <strong>Created At:</strong>
+                    <span id="createdAt"></span>
+                </p>
+
+                <p>
+                    <strong>Updated At:</strong>
+                    <span id="updatedAt"></span>
+                </p>
+            </div>
+
+            <div class="stats">
+
+                <div class="stat-box">
+                    <h3 id="publicRepos"></h3>
+                    <p>Repos</p>
+                </div>
+
+                <div class="stat-box">
+                    <h3 id="followers"></h3>
+                    <p>Followers</p>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+       
+</body>
+<Script>
+let data ; 
+document.getElementById("fetchBtn").addEventListener("click", function() {
+    const username = document.getElementById("username").value;
+    fetchGitHubUserInfo(username);
+    let errerElement =document.getElementById("errer");
+    if(data===null || data===undefined){
+    
+        errerElement.style.color="red";
+        errerElement.innerText="User not found. Please check the username and try again.";
+        return;
+    }
+    updateUI();
+    const dive = document.getElementById("userInfo");
+    dive.style.display = "block";
+    errerElement.innerText="";
+});
+
+const fetchGitHubUserInfo = async (username) => {
+    var url="https://api.github.com/users/";
+     const xml=new XMLHttpRequest();
+     
+     xml.open("GET",url+username,true);
+      xml.onreadystatechange=function(){
+     if(xml.readyState==4 && xml.status==200){
+         data= JSON.parse(xml.responseText);
+        console.log(data);
+     }
+     else if(xml.readyState==4){
+         const errerElement = document.getElementById("errer");
+         errerElement.style.color="red";
+         errerElement.innerText="User not found. Please check the username and try again.";
+     }
+}
+xml.send();
+};
+
+
+const updateUI = () => {
+    document.getElementById("avatar").setAttribute("src", data.avatar_url  || "https://via.placeholder.com/100");
+    document.getElementById("name").innerText = data.name || "N/A";
+    document.getElementById("bio").innerText = data.bio || "N/A";
+    const blogLink = document.getElementById("blog");
+    if (data.blog) {
+        blogLink.href = data.blog;
+        blogLink.innerText = data.blog;
+    } else {
+        blogLink.href = "#";
+        blogLink.innerText = "N/A";
+    }
+    document.getElementById("publicRepos").innerText = data.public_repos;
+    document.getElementById("followers").innerText = data.followers;
+    document.getElementById("createdAt").innerText = new Date(data.created_at).toLocaleDateString();
+    document.getElementById("updatedAt").innerText = new Date(data.updated_at).toLocaleDateString();
+    document.getElementById("email").innerText = data.email || "N/A";
+};
+
+</Script>
+</html>

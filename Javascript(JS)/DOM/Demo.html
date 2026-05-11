@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+</html>
+
+<script>
+
+    var listIndex = 0;
+
+    const mainDive = document.createElement("div");
+
+    mainDive.style.border = "1px solid black";
+
+    document.body.appendChild(mainDive);
+
+
+    const heding = document.createElement("h1");
+
+    heding.setAttribute("id", "heading");
+
+    heding.setAttribute("class", "heading");
+
+    heding.style.color = "red";
+
+
+    const headingtext = document.createTextNode("The List of the products: ");
+
+    heding.append(headingtext);
+
+    mainDive.append(heding);
+
+
+    const ulist = document.createElement("ul");
+
+    mainDive.appendChild(ulist);
+
+
+
+    function createListItem(text) {
+
+        const listItem = document.createElement("li");
+
+        listItem.textContent = text;
+
+        listItem.setAttribute("id", `listItem${listIndex}`);
+
+        listIndex++;
+
+        ulist.appendChild(listItem);
+    }
+
+
+    function deleteListItem() {
+
+        listIndex--;
+
+        const listItem = document.getElementById(`listItem${listIndex}`);
+
+        if (listItem) {
+
+            listItem.remove();
+
+        } else {
+
+            console.log("Not Found.");
+
+        }
+    }
+
+
+    createListItem("Product 1");
+
+    createListItem("Product 2");
+
+    createListItem("Product 3");
+
+
+
+
+// setInterval(() => {
+
+//     window.location.reload();
+
+// }, 1000);
+// window.print();
+
+window.navigator.clipboard.writeText("Dayanand");
+
+</script>

@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Predicting the Number </title>
+</head>
+ <style>
+
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body{
+            min-height: 100vh;
+            background: linear-gradient(135deg,#141e30,#243b55);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            color: white;
+        }
+
+        .container{
+            width: 100%;
+            max-width: 500px;
+            background: rgba(255,255,255,0.08);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 35px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+        }
+
+        .main-title{
+            font-size: 34px;
+            margin-bottom: 25px;
+            color: #00cec9;
+        }
+
+        .card{
+            background-color: rgba(255,255,255,0.08);
+            border-radius: 18px;
+            padding: 25px;
+            margin-top: 20px;
+            animation: fadeIn 0.4s ease;
+        }
+
+        @keyframes fadeIn{
+            from{
+                opacity: 0;
+                transform: translateY(15px);
+            }
+            to{
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .card h2{
+            margin-bottom: 20px;
+            color: #ffffff;
+        }
+
+        .range-buttons{
+            display: grid;
+            grid-template-columns: repeat(2,1fr);
+            gap: 15px;
+        }
+
+        .range-buttons button,
+        #submitBtn{
+            padding: 14px;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+            background-color: #00b894;
+            color: white;
+        }
+
+        .range-buttons button:hover,
+        #submitBtn:hover{
+            transform: translateY(-2px);
+            background-color: #019875;
+        }
+
+        #guessInput{
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 12px;
+            margin: 20px 0;
+            font-size: 16px;
+            outline: none;
+        }
+
+        #feedback{
+            margin-top: 18px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #ffeaa7;
+        }
+
+        #correct h2{
+            color: #55efc4;
+            margin-bottom: 15px;
+        }
+
+        #ptag{
+            font-size: 18px;
+            margin-bottom: 15px;
+            color: #dfe6e9;
+        }
+
+        #time{
+            font-size: 50px;
+            color: #00cec9;
+        }
+
+        .emoji{
+            font-size: 70px;
+            margin-bottom: 15px;
+        }
+
+    </style>
+<body>
+
+  <div class="container">
+
+        <h1 class="main-title">🎯 Number Guessing Game</h1>
+
+        <!-- Range Selection -->
+        <div id="range" class="card">
+
+            <h2>Select Difficulty Range</h2>
+
+            <div class="range-buttons">
+                <button id="btn1">1 - 10</button>
+                <button id="btn2">1 - 100</button>
+                <button id="btn3">1 - 1000</button>
+                <button id="btn4">1 - 10000</button>
+            </div>
+
+        </div>
+
+        <!-- Game Section -->
+        <div id="game" class="card" style="display: none;">
+
+            <h2>Guess the Number</h2>
+
+            <input 
+                type="number"
+                id="guessInput"
+                placeholder="Enter your guess"
+            >
+
+            <button id="submitBtn">Submit Guess</button>
+
+            <p id="feedback"></p>
+
+        </div>
+
+        <!-- Correct Section -->
+        <div id="correct" class="card" style="display: none;">
+
+            <div class="emoji">🏆</div>
+
+            <h2>Congratulations!</h2>
+
+            <p id="ptag">
+                You guessed the correct number.
+            </p>
+
+            <p>
+                Restarting game in
+            </p>
+
+            <h1 id="time">10</h1>
+
+        </div>
+
+    </div>
+    
+</body>
+
+<script>
+var range = 0;
+var randomNumber = 0;
+const rangeDiv = document.getElementById("range");
+
+function startGame() {
+    randomNumber = Math.floor(Math.random() * range) + 1;
+    document.getElementById("game").style.display = "block";
+
+    document.getElementById("submitBtn").addEventListener("click", function() {
+        const userGuess = parseInt(document.getElementById("guessInput").value);
+        if (isNaN(userGuess)) {
+            return;
+        }
+        const feedback = document.getElementById("feedback");
+
+        if (userGuess === randomNumber) {
+            feedback.textContent = "Congratulations! You guessed the number!" + ` The correct number was ${randomNumber}.`;
+                document.getElementById("correct").style.display = "block";
+                timeFunction();
+                waitingfunction();
+        } else if (userGuess < randomNumber) {
+            feedback.textContent = "Too low! Try again."+` Your guess was ${userGuess}`;
+        } else {
+            feedback.textContent = "Too high! Try again."+` Your guess was ${userGuess}`;
+        }
+        document.getElementById("guessInput").value="";
+    });
+}
+
+const waitingfunction = () => {
+   setTimeout(() => {
+    
+    document.getElementById("game").style.display = "none";
+    document.getElementById("range").style.display = "block";
+    document.getElementById("correct").style.display = "none";
+    document.getElementById("guessInput").value="";
+    document.getElementById("feedback").textContent="";
+    
+}, 10000); // 10 seconds
+}
+
+const timeFunction = () => {
+    let timeLeft = 9;
+    const timeElement = document.getElementById("time");
+    
+    const timer = setInterval(() => {
+        if (timeLeft > 0) {
+            timeElement.textContent = `Time left: ${timeLeft} seconds`;
+            timeLeft--;
+        } else {
+            clearInterval(timer);
+            timeElement.textContent = "Time's up!";
+        }
+        if(timeLeft===7){
+           document.getElementById("ptag").textContent = "";
+        }
+    }, 1000);
+}
+
+
+document.getElementById("range").addEventListener("click", function(event) {
+    console.log(event.target.id);
+    if (event.target.tagName === "BUTTON") {
+       if (event.target.id === "btn1") {
+            range = 10;
+        } else if (event.target.id === "btn2") {
+            range = 100;
+        } else if (event.target.id === "btn3") {
+            range = 1000;
+        } else if (event.target.id === "btn4") {
+            range = 10000;
+        }
+        startGame();
+        rangeDiv.style.display = "none";
+    }
+});
+
+</script>
+</html>

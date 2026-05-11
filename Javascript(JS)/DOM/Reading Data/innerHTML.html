@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Dayanand</h1>
+    <div>
+        <h2>Welcome to the DOM!</h2>
+    </div>
+</body>
+</html>
+<script>
+    //it can be showing html tags also
+    // Accessing the innerHTML of the <h1> element
+    const heading = document.querySelector('h1');
+    console.log(heading.innerHTML); // Outputs: Dayanand
+    // Modifying the innerHTML of the <h1> element
+    heading.innerHTML = 'Welcome to <em>DOM</em>!';
+    // The above line will change the content of the <h1> to "Welcome to DOM!" with "DOM" in italics
+
+    const div = document.querySelector('div');
+    console.log(div.innerHTML); // Outputs: <h2>Welcome to the DOM!</h2>
+    // Modifying the innerHTML of the <div> element
+    div.innerHTML = '<p>This is a new paragraph inside the div.</p>';
+    // The above line will replace the content of the <div> with a new paragraph
+    
+</script>
