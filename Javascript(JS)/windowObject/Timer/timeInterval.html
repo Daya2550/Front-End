@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+</html>
+<script>
+// Using setInterval to log a message every 2 seconds
+const intervalId = window.setInterval(() => {
+    console.log("This message is logged every 2 seconds");
+}, 2000);
+
+// To stop the interval after 10 seconds
+window.setTimeout(() => {
+
+    window.clearInterval(intervalId); // Clears the interval, stopping the repeated execution
+    
+    console.log("Interval cleared, no more messages will be logged");
+}, 10000);
+</script>

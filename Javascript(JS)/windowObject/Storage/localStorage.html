@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+    localStorage.setItem("name", "John Doe"); // Store data in localStorage
+    const name = localStorage.getItem("name"); // Retrieve data from localStorage
+    console.log(name); // Output: John Doe
+    alert(name); // Alert the retrieved value
+
+    localStorage.removeItem("name"); // Remove a specific item from localStorage
+    localStorage.clear(); // Clear all data from localStorage
+    
+</script>
+</html>

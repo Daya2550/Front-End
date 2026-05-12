@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Window Size Example</h1>
+    <p>Resize the window to see the current width and height.</p>
+</body>
+
+<script>
+   window.setInterval(() => {
+    // Get the current width and height of the window
+    const width = window.innerWidth - 100; // Subtract 100 pixels from the width
+    const height = window.innerHeight-100; // Subtract 100 pixels from the height
+    window.resizeTo(width, height);
+
+    
+    console.log(`Current w  indow size: ${width}x${height}`);
+}, 1000); // Log the size every second
+
+</script>
+</html>

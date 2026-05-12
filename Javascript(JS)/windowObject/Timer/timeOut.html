@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+</html>
+<script>
+
+window.setTimeout(function () {
+    console.log("Hello after 3 seconds");
+}, 3000);
+
+window.setTimeout(() => {
+    console.log("Hello after 5 seconds");
+}, 5000);
+
+const timeoutId = window.setTimeout(() => {
+    console.log("This will not be logged");
+}, 10000);
+
+window.clearTimeout(timeoutId); // Clears the timeout, preventing the function from executing
+
+
+
+</script>

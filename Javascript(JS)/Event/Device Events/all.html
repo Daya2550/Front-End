@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>All Device Events</title>
+
+    <style>
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:Arial, sans-serif;
+        }
+
+        body{
+            background:#f4f4f4;
+            padding:20px;
+        }
+
+        .container{
+            max-width:900px;
+            margin:auto;
+            background:white;
+            padding:20px;
+            border-radius:10px;
+            box-shadow:0 0 10px rgba(0,0,0,0.1);
+        }
+
+        h1{
+            text-align:center;
+            margin-bottom:20px;
+        }
+
+        .card{
+            border:1px solid #ccc;
+            padding:15px;
+            border-radius:10px;
+            margin-bottom:15px;
+            background:#fafafa;
+        }
+
+        .title{
+            font-size:18px;
+            font-weight:bold;
+            margin-bottom:10px;
+        }
+
+        .value{
+            color:blue;
+            line-height:28px;
+        }
+
+        #touchArea{
+            width:100%;
+            height:180px;
+            background:lightblue;
+            border-radius:10px;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            margin-top:10px;
+            user-select:none;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <h1>All Device Events Example</h1>
+
+    <!-- Device Orientation -->
+    <div class="card">
+
+        <div class="title">
+            Device Orientation
+        </div>
+
+        <div class="value"
+             id="orientationData">
+
+            Waiting...
+
+        </div>
+
+    </div>
+
+    <!-- Device Motion -->
+    <div class="card">
+
+        <div class="title">
+            Device Motion
+        </div>
+
+        <div class="value"
+             id="motionData">
+
+            Waiting...
+
+        </div>
+
+    </div>
+
+    <!-- Touch Events -->
+    <div class="card">
+
+        <div class="title">
+            Touch Events
+        </div>
+
+        <div class="value"
+             id="touchData">
+
+            Touch the box
+
+        </div>
+
+        <div id="touchArea">
+            Touch Here
+        </div>
+
+    </div>
+
+    <!-- Internet -->
+    <div class="card">
+
+        <div class="title">
+            Internet Status
+        </div>
+
+        <div class="value"
+             id="internetStatus">
+
+            Checking...
+
+        </div>
+
+    </div>
+
+    <!-- Battery -->
+    <div class="card">
+
+        <div class="title">
+            Battery Information
+        </div>
+
+        <div class="value"
+             id="batteryData">
+
+            Loading...
+
+        </div>
+
+    </div>
+
+    <!-- Screen Orientation -->
+    <div class="card">
+
+        <div class="title">
+            Screen Orientation
+        </div>
+
+        <div class="value"
+             id="screenData">
+
+            Waiting...
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+    // =========================
+    // DEVICE ORIENTATION
+    // =========================
+
+    const orientationData =
+        document.getElementById(
+            "orientationData"
+        );
+
+    window.addEventListener(
+        "deviceorientation",
+        (event) => {
+
+            orientationData.innerHTML = `
+                Alpha : ${event.alpha?.toFixed(2)} <br>
+                Beta : ${event.beta?.toFixed(2)} <br>
+                Gamma : ${event.gamma?.toFixed(2)}
+            `;
+        }
+    );
+
+    // =========================
+    // DEVICE MOTION
+    // =========================
+
+    const motionData =
+        document.getElementById(
+            "motionData"
+        );
+
+    window.addEventListener(
+        "devicemotion",
+        (event) => {
+
+            const acceleration =
+                event.acceleration;
+
+            motionData.innerHTML = `
+                X : ${acceleration.x?.toFixed(2)} <br>
+                Y : ${acceleration.y?.toFixed(2)} <br>
+                Z : ${acceleration.z?.toFixed(2)}
+            `;
+        }
+    );
+
+    // =========================
+    // TOUCH EVENTS
+    // =========================
+
+    const touchArea =
+        document.getElementById(
+            "touchArea"
+        );
+
+    const touchData =
+        document.getElementById(
+            "touchData"
+        );
+
+    touchArea.addEventListener(
+        "touchstart",
+        (event) => {
+
+            const touch =
+                event.touches[0];
+
+            touchData.innerHTML = `
+                Touch Started <br>
+                X : ${touch.clientX} <br>
+                Y : ${touch.clientY}
+            `;
+        }
+    );
+
+    touchArea.addEventListener(
+        "touchmove",
+        (event) => {
+
+            const touch =
+                event.touches[0];
+
+            touchData.innerHTML = `
+                Finger Moving <br>
+                X : ${touch.clientX} <br>
+                Y : ${touch.clientY}
+            `;
+        }
+    );
+
+    touchArea.addEventListener(
+        "touchend",
+        () => {
+
+            touchData.innerHTML =
+                "Touch Ended";
+
+        }
+    );
+
+    // =========================
+    // INTERNET EVENTS
+    // =========================
+
+    const internetStatus =
+        document.getElementById(
+            "internetStatus"
+        );
+
+    function updateInternetStatus() {
+
+        if(navigator.onLine) {
+
+            internetStatus.innerHTML =
+                "Connected";
+
+        } else {
+
+            internetStatus.innerHTML =
+                "Disconnected";
+        }
+    }
+
+    updateInternetStatus();
+
+    window.addEventListener(
+        "online",
+        updateInternetStatus
+    );
+
+    window.addEventListener(
+        "offline",
+        updateInternetStatus
+    );
+
+    // =========================
+    // BATTERY EVENTS
+    // =========================
+
+    const batteryData =
+        document.getElementById(
+            "batteryData"
+        );
+
+    if(navigator.getBattery) {
+
+        navigator.getBattery()
+        .then((battery) => {
+
+            function updateBatteryInfo() {
+
+                batteryData.innerHTML = `
+                    Battery Level :
+                    ${battery.level * 100}% <br>
+
+                    Charging :
+                    ${battery.charging}
+                `;
+            }
+
+            updateBatteryInfo();
+
+            battery.addEventListener(
+                "levelchange",
+                updateBatteryInfo
+            );
+
+            battery.addEventListener(
+                "chargingchange",
+                updateBatteryInfo
+            );
+
+        });
+
+    } else {
+
+        batteryData.innerHTML =
+            "Battery API Not Supported";
+    }
+
+    // =========================
+    // SCREEN ORIENTATION
+    // =========================
+
+    const screenData =
+        document.getElementById(
+            "screenData"
+        );
+
+    function updateScreenOrientation() {
+
+        screenData.innerHTML =
+            `
+            Angle :
+            ${screen.orientation.angle} <br>
+
+            Type :
+            ${screen.orientation.type}
+            `;
+    }
+
+    updateScreenOrientation();
+
+    screen.orientation.addEventListener(
+        "change",
+        updateScreenOrientation
+    );
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,26 @@
+<button id="addCart">Add To Cart</button>
+
+<p id="count">Cart: 0</p>
+
+<script>
+let cartCount = 0;
+
+// Cart update module
+document.addEventListener("cartUpdated", function () {
+    cartCount++;
+
+    document.getElementById("count").innerText =
+        "Cart: " + cartCount;
+});
+
+
+
+// Button click
+document.getElementById("addCart").addEventListener("click", function () {
+
+    const cartEvent = new CustomEvent("cartUpdated");
+
+    // trigger the custom event
+    document.dispatchEvent(cartEvent);
+});
+</script>

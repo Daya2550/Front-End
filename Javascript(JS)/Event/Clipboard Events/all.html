@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<input type="text"
+       placeholder="Try copy, cut, paste">
+
+<script>
+
+const input =
+    document.querySelector("input");
+
+input.addEventListener("copy", () => {
+
+    console.log("COPY EVENT");
+
+});
+
+input.addEventListener("cut", () => {
+
+    console.log("CUT EVENT");
+
+
+});
+
+input.addEventListener("paste", (event) => {
+
+    console.log("PASTE EVENT");
+
+    console.log(
+        event.clipboardData.getData("text")
+    );
+     console.log(event.defaultPrevented());// false
+    event.preventDefault()
+    console.log(event.defaultPrevented());// true
+    event.
+
+    event.clipboardData.getData()
+
+    event.clipboardData.setData()
+
+});
+
+</script>
+
+</body>
+</html>

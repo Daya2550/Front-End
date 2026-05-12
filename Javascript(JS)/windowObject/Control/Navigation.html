@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button id="nextPage">Next Page</button>
+    <button id="prevPage">Previous Page</button>
+    <button id="index1Page">Index Page</button>
+    <button id="index2Page">Index Page 2</button>
+    
+</body>
+
+<script>
+    document.getElementById("nextPage").addEventListener("click", () => {
+        window.history.forward(); // Navigates to the next page in the history
+    });
+
+    document.getElementById("prevPage").addEventListener("click", () => {
+        window.history.back(); // Navigates to the previous page in the history
+    });
+
+    document.getElementById("index1Page").addEventListener("click", () => {
+        window.history.go(0); // Reloads the current page
+    });
+
+    document.getElementById("index2Page").addEventListener("click", () => {
+        window.history.go(-2); // Navigates back two pages in the history
+    });
+</script>
+</html>

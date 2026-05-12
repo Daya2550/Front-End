@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>WebSocket Live Messages</title>
+
+    <style>
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:Arial, sans-serif;
+        }
+
+        body{
+            background:#f4f4f4;
+            padding:20px;
+        }
+
+        .container{
+            width:90%;
+            max-width:700px;
+            margin:auto;
+            background:white;
+            padding:20px;
+            border-radius:10px;
+            box-shadow:0 0 10px rgba(0,0,0,0.1);
+        }
+
+        h1{
+            margin-bottom:20px;
+            text-align:center;
+        }
+
+        .status{
+            padding:10px;
+            border-radius:5px;
+            margin-bottom:15px;
+            font-weight:bold;
+        }
+
+        .connected{
+            background:#d4edda;
+            color:#155724;
+        }
+
+        .disconnected{
+            background:#f8d7da;
+            color:#721c24;
+        }
+
+        .messages{
+            height:400px;
+            overflow-y:auto;
+            border:1px solid #ccc;
+            padding:10px;
+            border-radius:5px;
+            background:#fafafa;
+        }
+
+        .message{
+            padding:10px;
+            margin-bottom:10px;
+            background:#e9ecef;
+            border-radius:5px;
+            word-wrap:break-word;
+        }
+
+        .time{
+            font-size:12px;
+            color:gray;
+            margin-top:5px;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+
+        <h1>WebSocket Live Data</h1>
+
+        <div id="status" class="status disconnected">
+            Disconnected
+        </div>
+
+        <div id="messages" class="messages"></div>
+
+    </div>
+
+    <script>
+
+        // Public echo websocket server
+        const socket = new WebSocket(
+            "wss://echo.websocket.dj"
+        );
+
+        const statusDiv =
+            document.getElementById("status");
+
+        const messagesDiv =
+            document.getElementById("messages");
+
+        // Connection Open
+        socket.onopen = () => {
+
+            statusDiv.innerText = "Connected";
+            statusDiv.classList.remove("disconnected");
+            statusDiv.classList.add("connected");
+
+            // Send test data automatically
+            socket.send("Hello Dayanand");
+
+            // Send data every 3 seconds
+            setInterval(() => {
+
+                const randomMessage =
+                    "Live Message : " +
+                    Math.floor(Math.random() * 1000);
+
+                socket.send(randomMessage);
+
+            }, 3000);
+        };
+
+        // Receive Message
+        socket.onmessage = (event) => {
+
+            showMessage(event.data);
+
+        };
+
+        // Error
+        socket.onerror = () => {
+
+            statusDiv.innerText = "Error in Connection";
+
+        };
+
+        // Close
+        socket.onclose = () => {
+
+            statusDiv.innerText = "Disconnected";
+
+            statusDiv.classList.remove("connected");
+
+            statusDiv.classList.add("disconnected");
+        };
+
+        // Show Message on Screen
+        function showMessage(message) {
+
+            const div =
+                document.createElement("div");
+
+            div.className = "message";
+
+            const currentTime =
+                new Date().toLocaleTimeString();
+
+            div.innerHTML = `
+                <div>${message}</div>
+                <div class="time">${currentTime}</div>
+            `;
+
+            messagesDiv.appendChild(div);
+
+            // Auto scroll bottom
+            messagesDiv.scrollTop =
+                messagesDiv.scrollHeight;
+        }
+
+    </script>
+
+</body>
+</html>

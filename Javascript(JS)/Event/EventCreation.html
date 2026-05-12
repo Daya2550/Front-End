@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Creation </title>
+</head>
+<body>
+    <!-- using inline event handler  -->
+    <button onclick="alert('clicked inline event handler')">Click Inline Event Handler</button> 
+
+    <!-- using addEventListener method  -->
+    <button id="myButton">Click Event Listener</button>
+
+    <!-- Using DOM Events -->
+     <button id="dombut">Click DOM Event</button>
+
+ 
+</body>
+
+//In JavaScript, events are actions or occurrences that happen in the browser (or environment) that your code can respond to.
+ For example: a user clicking a button, pressing a key, loading a page, or moving the mouse.
+//There are several ways to create and handle events in JavaScript, including:
+
+
+   <script>
+        document.getElementById("myButton").addEventListener("click", function() {
+            alert('clicked using addEventListener');
+        });
+    </script>
+
+    <script>
+        const button = document.getElementById("dombut");
+        button.onclick = function() {
+            alert('clicked DOM Event');
+        };
+    </script>
+
+
+</html>

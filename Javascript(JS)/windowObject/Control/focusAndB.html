@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>Focus and Blur Example</h1>
+</body>
+<script>
+   window.setTimeout(() => {
+    // Focus the window after 2 seconds
+    window.focus();
+    
+    console.log("Window is focused");
+}, 2000);
+
+window.setTimeout(() => {
+    // Blur the window after 4 seconds
+    window.blur();
+    
+    console.log("Window is blurred");
+}, 4000);
+</script>
+</html>

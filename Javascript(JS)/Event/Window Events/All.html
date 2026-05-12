@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>All Window Events</title>
+
+    <style>
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:Arial, sans-serif;
+        }
+
+        body{
+            background:#f4f4f4;
+            padding:20px;
+            height:2000px;
+        }
+
+        .container{
+            max-width:900px;
+            margin:auto;
+            background:white;
+            padding:20px;
+            border-radius:10px;
+            box-shadow:0 0 10px rgba(0,0,0,0.1);
+        }
+
+        h1{
+            text-align:center;
+            margin-bottom:20px;
+        }
+
+        .card{
+            border:1px solid #ccc;
+            border-radius:10px;
+            padding:15px;
+            margin-bottom:15px;
+            background:#fafafa;
+        }
+
+        .title{
+            font-size:20px;
+            font-weight:bold;
+            margin-bottom:10px;
+        }
+
+        .value{
+            color:blue;
+            line-height:28px;
+        }
+
+        #logBox{
+            background:black;
+            color:lime;
+            padding:15px;
+            border-radius:10px;
+            height:300px;
+            overflow-y:auto;
+        }
+
+        .log{
+            margin-bottom:8px;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <h1>All Window Events Example</h1>
+
+    <!-- Window Size -->
+    <div class="card">
+
+        <div class="title">
+            Window Size
+        </div>
+
+        <div class="value"
+             id="windowSize">
+
+        </div>
+
+    </div>
+
+    <!-- Scroll Position -->
+    <div class="card">
+
+        <div class="title">
+            Scroll Position
+        </div>
+
+        <div class="value"
+             id="scrollPosition">
+
+        </div>
+
+    </div>
+
+    <!-- Mouse Position -->
+    <div class="card">
+
+        <div class="title">
+            Mouse Position
+        </div>
+
+        <div class="value"
+             id="mousePosition">
+
+        </div>
+
+    </div>
+
+    <!-- Focus Status -->
+    <div class="card">
+
+        <div class="title">
+            Window Focus
+        </div>
+
+        <div class="value"
+             id="focusStatus">
+
+            Active
+
+        </div>
+
+    </div>
+
+    <!-- Logs -->
+    <div class="card">
+
+        <div class="title">
+            Window Event Logs
+        </div>
+
+        <div id="logBox"></div>
+
+    </div>
+
+</div>
+
+<script>
+
+    const windowSize =
+        document.getElementById(
+            "windowSize"
+        );
+
+    const scrollPosition =
+        document.getElementById(
+            "scrollPosition"
+        );
+
+    const mousePosition =
+        document.getElementById(
+            "mousePosition"
+        );
+
+    const focusStatus =
+        document.getElementById(
+            "focusStatus"
+        );
+
+    const logBox =
+        document.getElementById(
+            "logBox"
+        );
+
+    // =========================
+    // LOG FUNCTION
+    // =========================
+
+    function addLog(message) {
+
+        const div =
+            document.createElement("div");
+
+        div.className = "log";
+
+        const time =
+            new Date()
+            .toLocaleTimeString();
+
+        div.innerHTML =
+            `[${time}] ${message}`;
+
+        logBox.appendChild(div);
+
+        logBox.scrollTop =
+            logBox.scrollHeight;
+    }
+
+    // =========================
+    // LOAD EVENT
+    // =========================
+
+    window.addEventListener(
+        "load",
+        () => {
+
+            addLog(
+                "Window Loaded"
+            );
+        }
+    );
+
+    // =========================
+    // RESIZE EVENT
+    // =========================
+
+    function updateWindowSize() {
+
+        windowSize.innerHTML = `
+            Width :
+            ${window.innerWidth} <br>
+
+            Height :
+            ${window.innerHeight}
+        `;
+    }
+
+    updateWindowSize();
+
+    window.addEventListener(
+        "resize",
+        () => {
+
+            updateWindowSize();
+
+            addLog(
+                "Window Resized"
+            );
+        }
+    );
+
+    // =========================
+    // SCROLL EVENT
+    // =========================
+
+    window.addEventListener(
+        "scroll",
+        () => {
+
+            scrollPosition.innerHTML = `
+                Scroll X :
+                ${window.scrollX} <br>
+
+                Scroll Y :
+                ${window.scrollY}
+            `;
+
+            addLog(
+                "Window Scrolled"
+            );
+        }
+    );
+
+    // =========================
+    // MOUSEMOVE EVENT
+    // =========================
+
+    window.addEventListener(
+        "mousemove",
+        (event) => {
+
+            mousePosition.innerHTML = `
+                X :
+                ${event.clientX} <br>
+
+                Y :
+                ${event.clientY}
+            `;
+        }
+    );
+
+    // =========================
+    // FOCUS EVENT
+    // =========================
+
+    window.addEventListener(
+        "focus",
+        () => {
+
+            focusStatus.innerHTML =
+                "Active";
+
+            addLog(
+                "Window Focused"
+            );
+        }
+    );
+
+    // =========================
+    // BLUR EVENT
+    // =========================
+
+    window.addEventListener(
+        "blur",
+        () => {
+
+            focusStatus.innerHTML =
+                "Inactive";
+
+            addLog(
+                "Window Blurred"
+            );
+        }
+    );
+
+    // =========================
+    // ONLINE EVENT
+    // =========================
+
+    window.addEventListener(
+        "online",
+        () => {
+
+            addLog(
+                "Internet Connected"
+            );
+        }
+    );
+
+    // =========================
+    // OFFLINE EVENT
+    // =========================
+
+    window.addEventListener(
+        "offline",
+        () => {
+
+            addLog(
+                "Internet Disconnected"
+            );
+        }
+    );
+
+    // =========================
+    // ERROR EVENT
+    // =========================
+
+    window.addEventListener(
+        "error",
+        (event) => {
+
+            addLog(
+                `Error : ${event.message}`
+            );
+        }
+    );
+
+    // =========================
+    // BEFORE UNLOAD EVENT
+    // =========================
+
+    window.addEventListener(
+        "beforeunload",
+        (event) => {
+
+            event.preventDefault();
+
+            event.returnValue = "";
+
+        }
+    );
+
+    // =========================
+    // UNLOAD EVENT
+    // =========================
+
+    window.addEventListener(
+        "unload",
+        () => {
+
+            console.log(
+                "Window Closed"
+            );
+        }
+    );
+
+    // =========================
+    // HASHCHANGE EVENT
+    // =========================
+
+    window.addEventListener(
+        "hashchange",
+        () => {
+
+            addLog(
+                `Hash Changed : ${location.hash}`
+            );
+        }
+    );
+
+    // =========================
+    // STORAGE EVENT
+    // =========================
+
+    window.addEventListener(
+        "storage",
+        (event) => {
+
+            addLog(
+                `Storage Changed :
+                ${event.key}`
+            );
+        }
+    );
+
+</script>
+
+</body>
+</html>

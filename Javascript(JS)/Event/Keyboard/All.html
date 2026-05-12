@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Keyboard Events</title>
+
+    <style>
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:Arial, sans-serif;
+        }
+
+        body{
+            background:#f4f4f4;
+            padding:20px;
+        }
+
+        .container{
+            max-width:900px;
+            margin:auto;
+            background:white;
+            padding:20px;
+            border-radius:10px;
+            box-shadow:0 0 10px rgba(0,0,0,0.1);
+        }
+
+        h1{
+            text-align:center;
+            margin-bottom:20px;
+        }
+
+        input{
+            width:100%;
+            padding:12px;
+            font-size:18px;
+            border:1px solid #ccc;
+            border-radius:5px;
+            outline:none;
+            margin-bottom:20px;
+        }
+
+        .card{
+            border:1px solid #ccc;
+            padding:15px;
+            border-radius:10px;
+            margin-bottom:15px;
+            background:#fafafa;
+        }
+
+        .title{
+            font-size:18px;
+            font-weight:bold;
+            margin-bottom:10px;
+        }
+
+        .value{
+            color:blue;
+            line-height:28px;
+        }
+
+        #logBox{
+            background:black;
+            color:lime;
+            padding:15px;
+            height:250px;
+            overflow-y:auto;
+            border-radius:10px;
+        }
+
+        .log{
+            margin-bottom:8px;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <h1>All Keyboard Events Example</h1>
+
+    <input type="text"
+           id="keyboardInput"
+           placeholder="Type something...">
+
+    <!-- Key Information -->
+    <div class="card">
+
+        <div class="title">
+            Key Information
+        </div>
+
+        <div class="value"
+             id="keyInfo">
+
+            Press Any Key
+
+        </div>
+
+    </div>
+
+    <!-- Event Logs -->
+    <div class="card">
+
+        <div class="title">
+            Keyboard Event Logs
+        </div>
+
+        <div id="logBox"></div>
+
+    </div>
+
+</div>
+
+<script>
+
+    const input =
+        document.getElementById(
+            "keyboardInput"
+        );
+
+    const keyInfo =
+        document.getElementById(
+            "keyInfo"
+        );
+
+    const logBox =
+        document.getElementById(
+            "logBox"
+        );
+
+    // =========================
+    // ADD LOG
+    // =========================
+
+    function addLog(message) {
+
+        const div =
+            document.createElement("div");
+
+        div.className = "log";
+
+        const time =
+            new Date()
+            .toLocaleTimeString();
+
+        div.innerHTML =
+            `[${time}] ${message}`;
+
+        logBox.appendChild(div);
+
+        logBox.scrollTop =
+            logBox.scrollHeight;
+    }
+
+    // =========================
+    // KEYDOWN
+    // =========================
+
+    input.addEventListener(
+        "keydown",
+        (event) => {
+
+            keyInfo.innerHTML = `
+                Event : keydown <br>
+                Key : ${event.key} <br>
+                Code : ${event.code} <br>
+                KeyCode : ${event.keyCode} <br>
+                Ctrl : ${event.ctrlKey} <br>
+                Shift : ${event.shiftKey} <br>
+                Alt : ${event.altKey}
+            `;
+
+            addLog(
+                `keydown → ${event.key}`
+            );
+
+        }
+    );
+
+    // =========================
+    // KEYUP
+    // =========================
+
+    input.addEventListener(
+        "keyup",
+        (event) => {
+
+            addLog(
+                `keyup → ${event.key}`
+            );
+
+        }
+    );
+
+    // =========================
+    // KEYPRESS
+    // =========================
+
+    input.addEventListener(
+        "keypress",
+        (event) => {
+
+            addLog(
+                `keypress → ${event.key}`
+            );
+
+        }
+    );
+
+    // =========================
+    // SHORTCUT KEYS
+    // =========================
+
+    document.addEventListener(
+        "keydown",
+        (event) => {
+
+            // Ctrl + S
+            if(
+                event.ctrlKey &&
+                event.key === "s"
+            ) {
+
+                event.preventDefault();
+
+                addLog(
+                    "CTRL + S Pressed"
+                );
+            }
+
+            // Ctrl + C
+            if(
+                event.ctrlKey &&
+                event.key === "c"
+            ) {
+
+                addLog(
+                    "CTRL + C Pressed"
+                );
+            }
+
+            // Enter Key
+            if(
+                event.key === "Enter"
+            ) {
+
+                addLog(
+                    "ENTER Pressed"
+                );
+            }
+
+            // Escape Key
+            if(
+                event.key === "Escape"
+            ) {
+
+                addLog(
+                    "ESC Pressed"
+                );
+            }
+
+            // Arrow Keys
+            if(
+                event.key === "ArrowUp"
+            ) {
+
+                addLog(
+                    "UP ARROW"
+                );
+            }
+
+            if(
+                event.key === "ArrowDown"
+            ) {
+
+                addLog(
+                    "DOWN ARROW"
+                );
+            }
+
+            if(
+                event.key === "ArrowLeft"
+            ) {
+
+                addLog(
+                    "LEFT ARROW"
+                );
+            }
+
+            if(
+                event.key === "ArrowRight"
+            ) {
+
+                addLog(
+                    "RIGHT ARROW"
+                );
+            }
+
+        }
+    );
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>All Form Events</title>
+
+    <style>
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:Arial, sans-serif;
+        }
+
+        body{
+            background:#f4f4f4;
+            padding:20px;
+        }
+
+        .container{
+            max-width:800px;
+            margin:auto;
+            background:white;
+            padding:20px;
+            border-radius:10px;
+            box-shadow:0 0 10px rgba(0,0,0,0.1);
+        }
+
+        h1{
+            text-align:center;
+            margin-bottom:20px;
+        }
+
+        .form-group{
+            margin-bottom:15px;
+        }
+
+        label{
+            display:block;
+            margin-bottom:5px;
+            font-weight:bold;
+        }
+
+        input,
+        textarea,
+        select{
+            width:100%;
+            padding:10px;
+            border:1px solid #ccc;
+            border-radius:5px;
+            outline:none;
+        }
+
+        button{
+            padding:10px 20px;
+            border:none;
+            border-radius:5px;
+            cursor:pointer;
+            margin-right:10px;
+        }
+
+        .submit-btn{
+            background:green;
+            color:white;
+        }
+
+        .reset-btn{
+            background:red;
+            color:white;
+        }
+
+        #logBox{
+            margin-top:20px;
+            background:black;
+            color:lime;
+            padding:15px;
+            height:250px;
+            overflow-y:auto;
+            border-radius:10px;
+        }
+
+        .log{
+            margin-bottom:8px;
+        }
+
+        .focus{
+            background:lightyellow;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <h1>All Form Events Example</h1>
+
+    <form id="myForm">
+
+        <!-- Name -->
+        <div class="form-group">
+
+            <label>Name</label>
+
+            <input type="text"
+                   id="name"
+                   placeholder="Enter Name"
+                   required>
+
+        </div>
+
+        <!-- Email -->
+        <div class="form-group">
+
+            <label>Email</label>
+
+            <input type="email"
+                   id="email"
+                   placeholder="Enter Email"
+                   required>
+
+        </div>
+
+        <!-- Password -->
+        <div class="form-group">
+
+            <label>Password</label>
+
+            <input type="password"
+                   id="password"
+                   placeholder="Enter Password">
+
+        </div>
+
+        <!-- City -->
+        <div class="form-group">
+
+            <label>City</label>
+
+            <select id="city">
+
+                <option value="">
+                    Select City
+                </option>
+
+                <option>Pune</option>
+                <option>Mumbai</option>
+                <option>Delhi</option>
+
+            </select>
+
+        </div>
+
+        <!-- About -->
+        <div class="form-group">
+
+            <label>About</label>
+
+            <textarea id="about"
+                      rows="4"
+                      placeholder="Write Something"></textarea>
+
+        </div>
+
+        <!-- Checkbox -->
+        <div class="form-group">
+
+            <label>
+
+                <input type="checkbox"
+                       id="check">
+
+                Accept Terms
+
+            </label>
+
+        </div>
+
+        <!-- Buttons -->
+        <button type="submit"
+                class="submit-btn">
+
+            Submit
+
+        </button>
+
+        <button type="reset"
+                class="reset-btn">
+
+            Reset
+
+        </button>
+
+    </form>
+
+    <!-- Event Logs -->
+    <div id="logBox"></div>
+
+</div>
+
+<script>
+
+    const form =
+        document.getElementById(
+            "myForm"
+        );
+
+    const inputs =
+        document.querySelectorAll(
+            "input, textarea, select"
+        );
+
+    const logBox =
+        document.getElementById(
+            "logBox"
+        );
+
+    // =========================
+    // LOG FUNCTION
+    // =========================
+
+    function addLog(message) {
+
+        const div =
+            document.createElement("div");
+
+        div.className = "log";
+
+        const time =
+            new Date()
+            .toLocaleTimeString();
+
+        div.innerHTML =
+            `[${time}] ${message}`;
+
+        logBox.appendChild(div);
+
+        logBox.scrollTop =
+            logBox.scrollHeight;
+    }
+
+    // =========================
+    // INPUT EVENTS
+    // =========================
+
+    inputs.forEach((element) => {
+
+        // Focus
+        element.addEventListener(
+            "focus",
+            () => {
+
+                element.classList.add(
+                    "focus"
+                );
+
+                addLog(
+                    `${element.id} : focus`
+                );
+            }
+        );
+
+        // Blur
+        element.addEventListener(
+            "blur",
+            () => {
+
+                element.classList.remove(
+                    "focus"
+                );
+
+                addLog(
+                    `${element.id} : blur`
+                );
+            }
+        );
+
+        // Input
+        element.addEventListener(
+            "input",
+            () => {
+
+                addLog(
+                    `${element.id} : input = ${element.value}`
+                );
+            }
+        );
+
+        // Change
+        element.addEventListener(
+            "change",
+            () => {
+
+                addLog(
+                    `${element.id} : changed`
+                );
+            }
+        );
+
+        // Select
+        element.addEventListener(
+            "select",
+            () => {
+
+                addLog(
+                    `${element.id} : text selected`
+                );
+            }
+        );
+
+        // Invalid
+        element.addEventListener(
+            "invalid",
+            () => {
+
+                addLog(
+                    `${element.id} : invalid`
+                );
+            }
+        );
+
+    });
+
+    // =========================
+    // FORM SUBMIT
+    // =========================
+
+    form.addEventListener(
+        "submit",
+        (event) => {
+
+            event.preventDefault();
+
+            addLog(
+                "Form Submitted"
+            );
+        }
+    );
+
+    // =========================
+    // FORM RESET
+    // =========================
+
+    form.addEventListener(
+        "reset",
+        () => {
+
+            addLog(
+                "Form Reset"
+            );
+        }
+    );
+
+</script>
+
+</body>
+</html>
