@@ -16,9 +16,14 @@ input.addEventListener("copy", () => {
 
 });
 
-input.addEventListener("cut", () => {
+input.addEventListener("cut", (event) => {
 
+    window.alert("not");
     console.log("CUT EVENT");
+    
+      event.preventDefault();
+   
+
 
 
 });

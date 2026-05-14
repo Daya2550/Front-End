@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="mouse">
+        <h1 id="x"></h1>
+        <h1 id="y"></h1>
+        <h1 id="tracker" style="display: none;">Mouse Position Tracker</h1>
+    </div>
+
+   <h1 id="str"></h1>
+
+
+   <div id="battry">
+    <h1 id="batry"></h1>
+   </div>
+</body>
+<script>
+window.addEventListener("mousemove", (event) => {
+    document.getElementById("x").textContent = `X: ${event.clientX}`;
+    document.getElementById("y").textContent = `Y: ${event.clientY}`;
+    if (event.clientX === 200 && event.clientY === 200) {
+        document.getElementById("tracker").style.display = "block";
+    } else {
+        document.getElementById("tracker").style.display = "none";
+    }
+});
+
+let str="";
+
+    window.addEventListener(
+        "keypress",
+        (event) => {
+            
+            if(event.key === "Enter"){
+                if(str==="dayanand"){
+                    document.getElementById("str").textContent = str;
+                }  
+                else{
+                    str="";
+                }
+            }
+            else{
+                str += event.key;
+            }
+        }
+    );
+
+navigator.getBattery()
+.then((battery) => {
+
+    document.getElementById("batry")
+    .innerHTML = `
+        Battery Level :
+        ${battery.level * 100}% <br>
+
+        Charging :
+        ${battery.charging}
+    `;
+
+});
+
+
+
+
+</script>
+</html>

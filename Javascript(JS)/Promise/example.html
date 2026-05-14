@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Promise Static Methods</title>
+
+    <style>
+
+        body{
+            font-family:Arial, sans-serif;
+            padding:20px;
+            background:#f4f4f4;
+        }
+
+        .container{
+            max-width:900px;
+            margin:auto;
+            background:white;
+            padding:20px;
+            border-radius:10px;
+        }
+
+        h1{
+            text-align:center;
+            margin-bottom:20px;
+        }
+
+        .box{
+            background:black;
+            color:lime;
+            padding:20px;
+            border-radius:10px;
+            min-height:400px;
+        }
+
+        .log{
+            margin-bottom:10px;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <h1>
+        Promise Static Methods
+    </h1>
+
+    <div id="output" class="box"></div>
+
+</div>
+
+<script>
+
+    const output =
+        document.getElementById(
+            "output"
+        );
+
+    // =========================
+    // LOG FUNCTION
+    // =========================
+
+    function print(message) {
+
+        const div =
+            document.createElement("div");
+
+        div.className = "log";
+
+        div.innerHTML = message;
+
+        output.appendChild(div);
+    }
+
+    // =========================
+    // 1. Promise.resolve()
+    // =========================
+
+    Promise.resolve("Promise.resolve Success")
+    .then((data) => {
+
+        print(`
+            1. resolve() :
+            ${data}
+        `);
+
+    });
+
+    // =========================
+    // 2. Promise.reject()
+    // =========================
+
+    Promise.reject("Promise.reject Error")
+    .catch((error) => {
+
+        print(`
+            2. reject() :
+            ${error}
+        `);
+
+    });
+
+    // =========================
+    // 3. Promise.all()
+    // =========================
+
+    const p1 =
+        Promise.resolve(10);
+
+    const p2 =
+        Promise.resolve(20);
+
+    Promise.all([p1, p2])
+    .then((data) => {
+
+        print(`
+            3. all() :
+            ${data}
+        `);
+
+    });
+
+    // =========================
+    // 4. Promise.race()
+    // =========================
+
+    const race1 =
+        new Promise((resolve) => {
+
+            setTimeout(() => {
+
+                resolve("First Promise");
+
+            }, 1000);
+
+        });
+
+    const race2 =
+        new Promise((resolve) => {
+
+            setTimeout(() => {
+
+                resolve("Second Promise");
+
+            }, 2000);
+
+        });
+
+    Promise.race([race1, race2])
+    .then((data) => {
+
+        print(`
+            4. race() :
+            ${data}
+        `);
+
+    });
+
+    // =========================
+    // 5. Promise.allSettled()
+    // =========================
+
+    const settle1 =
+        Promise.resolve("Success");
+
+    const settle2 =
+        Promise.reject("Failed");
+
+    Promise.allSettled([
+        settle1,
+        settle2
+    ])
+    .then((data) => {
+
+        print(`
+            5. allSettled() :
+            ${JSON.stringify(data)}
+        `);
+
+    });
+
+    // =========================
+    // 6. Promise.any()
+    // =========================
+
+    const any1 =
+        Promise.reject("Error 1");
+
+    const any2 =
+        Promise.resolve("First Success");
+
+    const any3 =
+        Promise.resolve("Second Success");
+
+    Promise.any([
+        any1,
+        any2,
+        any3
+    ])
+    .then((data) => {
+
+        print(`
+            6. any() :
+            ${data}
+        `);
+
+    });
+
+</script>
+
+</body>
+</html>
